@@ -70,7 +70,7 @@ module.exports = function (editor, jsbeautifyOptions) {
       }
       
       // get transformed file as string notation
-      var json = JSON.stringify(editBy(JSON.parse(file.contents.toString('utf8')), file), null, indent.indent);
+      var json = JSON.stringify(rawJSON, null, indent.indent);
 
       // beautify JSON
       if (beautify) {
