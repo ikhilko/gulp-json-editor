@@ -60,9 +60,17 @@ module.exports = function (editor, jsbeautifyOptions) {
       var beautifyOptions = merge({}, jsbeautifyOptions); // make copy
       beautifyOptions.indent_size = beautifyOptions.indent_size || indent.amount || 2;
       beautifyOptions.indent_char = beautifyOptions.indent_char || (indent.type === 'tab' ? '\t' : ' ');
-
-      // edit JSON object and get it as string notation
-      var json = JSON.stringify(editBy(JSON.parse(file.contents.toString('utf8'))), null, indent.indent);
+      
+      // transform file
+      var rawJSON = editBy(JSON.parse(file.contents.toString('utf8')), file);
+      
+      // skip file if returned "false"
+      if (rawJSON === false) {
+        return callback();
+      }
+      
+      // get transformed file as string notation
+      var json = JSON.stringify(editBy(JSON.parse(file.contents.toString('utf8')), file), null, indent.indent);
 
       // beautify JSON
       if (beautify) {
