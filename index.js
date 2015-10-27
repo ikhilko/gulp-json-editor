@@ -14,7 +14,7 @@ module.exports = function (editor, jsbeautifyOptions) {
   var editBy;
   if (typeof editor === 'function') {
     // edit JSON object by user specific function
-    editBy = function(json) { return editor(json); };
+    editBy = function(json, file) { return editor(json, file); };
   }
   else if (typeof editor === 'object') {
     // edit JSON object by merging with user specific object
